@@ -19,10 +19,10 @@ for ticker in tickers:
             call_put = split[1]
             opt_call_df['ticker']=ticker_sym
             opt_call_df['call_put']=call_put
-            opt_call_df['exp_date'] = opt_call_df['contractSymbol'].str.split('C').str[0]
+            opt_call_df['exp_date'] = opt_call_df['contractSymbol'].str[:-9]
             opt_call_df['exp_date'] = opt_call_df['exp_date'].str.extract('(\d+)',expand=False)
             opt_call_df['exp_date'] = pd.to_datetime(opt_call_df['exp_date'],yearfirst=True)
-            opt_call_df.to_csv(f"Resources/opt_calls/{ticker}_calls_{date}.csv", index=False)
+            opt_call_df.to_csv(f"Resources/opt_chain_dataframes/{ticker}_calls_{date}.csv", index=False)
         except ValueError:
             print(f"No Call Option Chain for {ticker}_{date}")
         except AttributeError:
