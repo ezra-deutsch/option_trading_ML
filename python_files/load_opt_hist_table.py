@@ -1,6 +1,6 @@
 import config
 import pandas as pd
-import glob
+import glob2
 from sqlalchemy import create_engine, Column, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.sqltypes import Boolean, DateTime, Integer, Numeric
@@ -15,8 +15,8 @@ session = Session()
 
 Base = declarative_base()
 
-class Opt_put_hist(Base):
-    __tablename__ = 'opt_put_hist'
+class Opt_hist_table(Base):
+    __tablename__ = 'opt_hist_table'
     
     id = Column(Integer, primary_key=True)
     contractSymbol = Column('contractSymbol',String)
@@ -42,19 +42,19 @@ class Opt_put_hist(Base):
 
 Base.metadata.create_all(db)
 
-filenames = glob.glob('Resources/opt_puts/*.csv')
+filenames = glob2.glob('Resources/opt_chain_dataframes/*.csv')
 
 for filename in filenames:
     file_name = f"{filename}"
     df = pd.read_csv(file_name)
-    df.to_sql(name=Opt_put_hist.__tablename__, con=db, if_exists='append', index=False)
+    df.to_sql(name=Opt_hist_table.__tablename__, con=db, if_exists='append', index=False)
 
 
 session = sessionmaker()
 session.configure(bind=db)
 s = session()
 
-results = s.query(Opt_put_hist).all()
+results = s.query(Opt_hist_table).all()
 for r in results:
     print(r)
 
