@@ -6,6 +6,6 @@ SECRET_KEY = 'rZzs6cQMAKtZxGj6Z9LSpvIDbTwz201jsMPk4nm7'
 
 # Details for the PostgreSQL DB = 'market_data'
 DB_FILE = ''
-db_password = 'um2021'
+db_password = 'Dap101290!'
 
 
